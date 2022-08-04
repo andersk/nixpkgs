@@ -93,6 +93,26 @@ stdenv.mkDerivation {
       url = "https://gerrit.openafs.org/changes/14953/revisions/0497b0cd7bffb6335ab9bcbf5a1310b8c6a4b299/patch";
       hash = "sha256-a5pd+CHHPr1mGxsF7tSlaBqoiKw2IGr1mJ7EaDHDJSw=";
     })
+    # Linux: Introduce file mapping readpage helpers
+    (fetchpatch {
+      url = "https://git.openafs.org/?p=openafs.git;a=patch;h=a81f7300f08d6e515adbde4bce4b72a3102b60f9";
+      hash = "sha256-fbw5cQsXWAvAEF4KN1VI12XCkNMUONBI341wzSyPO/k=";
+    })
+    # Linux-5.19: Rename aops readpage to read_folio
+    (fetchpatch {
+      url = "https://git.openafs.org/?p=openafs.git;a=patch;h=bfb852197edcbe0c38c499faecd7c1be23308a20";
+      hash = "sha256-y0yClgYlXWt59Fpe3A2ehra5hMbAmfTqP1F22YmRtHI=";
+    })
+    # Linux-5.19: Remove flags from aops->write_begin
+    (fetchpatch {
+      url = "https://git.openafs.org/?p=openafs.git;a=patch;h=52d8df218ff27c139ede221ec4decf593610fc47";
+      hash = "sha256-CJcjmaXKgSB9ySQLfC7C2sd9OSz4w53bMN7mN5rsZqk=";
+    })
+    # linux: Call put_page if errors in aops->readpages
+    (fetchpatch {
+      url = "https://git.openafs.org/?p=openafs.git;a=patch;h=903dd5bf5e9328431e356abc42e20c248c5df6fd";
+      hash = "sha256-SDVNbQUzVmGTgwbkhabt1gWJYBkOYWMnXqYooyNXaE8=";
+    })
   ];
 
   hardeningDisable = [ "pic" ];
@@ -133,6 +153,6 @@ stdenv.mkDerivation {
     license = licenses.ipl10;
     platforms = platforms.linux;
     maintainers = with maintainers; [ andersk maggesi spacefrogg ];
-    broken = kernel.isHardened || kernel.kernelAtLeast "5.19";
+    broken = kernel.isHardened || kernel.kernelAtLeast "6.0";
   };
 }
